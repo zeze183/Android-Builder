@@ -75,6 +75,11 @@ jobs:
       OUT_DIR: "${{ github.workspace }}/out"
       CCACHE_DIR: "${{ github.workspace }}/ccache"
     steps:
+
+      - name: ⭐ Install prerequisites1
+        run: |
+          apt-get update && apt-get install -y sudo
+
       # Set swap space
       - name: 📐 Set swap to 10G
         uses: pierotofy/set-swap-space@master
