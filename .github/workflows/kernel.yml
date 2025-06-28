@@ -11,7 +11,7 @@ on:
 jobs:
   Read-configuration:
     name: 🐂 Parse *.config.json
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       CONFIGS: ${{ steps.generate-matrix.outputs.CONFIGS }}
       BUILD_DATE: ${{ steps.generate-builddate.outputs.BUILDDATE }}
@@ -36,7 +36,7 @@ jobs:
   Build-Kernel:
     name: "🐎 Build kernel"
     runs-on: ubuntu-latest # <--- 修改点 1
-    container: ubuntu:18.04 # <--- 修改点 2: 新增此行
+    container: ubuntu:20.04 # <--- 修改点 2: 新增此行
     needs:
       - Read-configuration
     strategy:
@@ -78,7 +78,7 @@ jobs:
 
       - name: ⭐ Install prerequisites1
         run: |
-          apt-get update && apt-get install -y sudo 
+          apt-get update && apt-get install -y sudo
           # gnupg2 
            
           # # 添加软件源
