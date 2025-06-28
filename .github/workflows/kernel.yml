@@ -110,18 +110,18 @@ jobs:
           # Step 1: 修复 add-apt-repository 缺失问题
           # 在你的 Dockerfile 中或 run 命令中尝试
           apt-get update
-          apt-get install -y aptitude
-          aptitude install -y software-properties-common
-          # 输出
-          echo "add-apt-repository 命令已安装"
+          # apt-get install -y aptitude
+          # aptitude install -y software-properties-common
+          # # 输出
+          # echo "add-apt-repository 命令已安装"
 
       - name: Add PPA and update sources
         run: |
           # Step 2: 添加 PPA 并更新源
-          sudo add-apt-repository ppa:deadsnakes/ppa -y
+          # sudo add-apt-repository ppa:deadsnakes/ppa -y
           sudo apt update
           sudo apt-get update # <--- 修改点 3: 移除 sudo
-          sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3 python2 python2-dev
+          sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3 
           sudo apt-get install -y pngcrush schedtool dpkg-dev liblz4-tool make optipng maven device-tree-compiler 
           sudo apt-get install -y libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc
           sudo apt-get install -y libxml2-utils libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools lzop flex tree
