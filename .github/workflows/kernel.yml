@@ -107,13 +107,37 @@ jobs:
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
         run: |
-          # Step 1: 修复 add-apt-repository 缺失问题
-          # 在你的 Dockerfile 中或 run 命令中尝试
+          # 1. Set the non-interactive frontend to prevent prompts.
+          export DEBIAN_FRONTEND=noninteractive
+
+          # 2. Clean up any broken packages and caches from previous attempts.
+          #    This is a critical step for solving persistent issues.
+          apt-get clean
+          apt-get autoclean
+          apt-get autoremove -y
+
+          # 3. Update the package list to get the latest info from all repositories.
           apt-get update
-          apt-get install -y aptitude
-          # aptitude install -y software-properties-common
-          # # 输出
-          # echo "add-apt-repository 命令已安装"
+
+          # 4. Install 'aptitude' and 'software-properties-common'.
+          #    'aptitude' is a superior dependency solver.
+          #    'software-properties-common' is needed for 'add-apt-repository'.
+          apt-get install -y aptitude software-properties-common
+
+          # 5. Make sure the 'universe' repository is enabled.
+          #    This is where many dev packages and cross-compilers reside.
+          #    Ubuntu 18.04 images sometimes don't have this enabled by default.
+          add-apt-repository universe -y
+
+          # 6. Add the 'deadsnakes' PPA for Python.
+          add-apt-repository ppa:deadsnakes/ppa -y
+
+          # 7. Update the package list again to pull from the newly added repositories.
+          apt-get update
+
+          # 8. Attempt a full system upgrade.
+          #    This can sometimes resolve version conflicts by upgrading all packages.
+          apt-get dist-upgrade -y
 
       - name: Add PPA and update sources
         run: |
