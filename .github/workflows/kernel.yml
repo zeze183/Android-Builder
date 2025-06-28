@@ -107,7 +107,13 @@ jobs:
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
         run: |
-          sudo add-apt-repository ppa:deadsnakes/ppa
+        # Step 1: 修复 add-apt-repository 缺失问题
+          sudo apt update
+          sudo apt install -y software-properties-common
+
+          # Step 2: 添加 PPA 并更新源
+          sudo add-apt-repository ppa:deadsnakes/ppa -y
+          sudo apt update
           sudo apt update
           sudo apt-get update # <--- 修改点 3: 移除 sudo
           sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3 python2 python2-dev
