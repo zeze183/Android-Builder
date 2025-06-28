@@ -78,8 +78,8 @@ jobs:
 
       - name: ⭐ Install prerequisites1
         run: |
-          apt-get update && apt-get install -y sudo
-          
+          apt-get update && apt-get install -y sudo gnupg2 
+           
           # 添加软件源
           sudo su -c 'echo "deb http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list' root
           
@@ -107,7 +107,6 @@ jobs:
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
         run: |
-          apt-get update && apt-get install -y sudo
           sudo apt-get update # <--- 修改点 3: 移除 sudo
           sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3 python2 python2-dev
           sudo apt-get install -y pngcrush schedtool dpkg-dev liblz4-tool make optipng maven device-tree-compiler 
