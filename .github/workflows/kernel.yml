@@ -11,7 +11,7 @@ on:
 jobs:
   Read-configuration:
     name: 🐂 Parse *.config.json
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     outputs:
       CONFIGS: ${{ steps.generate-matrix.outputs.CONFIGS }}
       BUILD_DATE: ${{ steps.generate-builddate.outputs.BUILDDATE }}
@@ -78,19 +78,20 @@ jobs:
 
       - name: ⭐ Install prerequisites1
         run: |
-          apt-get update && apt-get install -y sudo gnupg2 
+          apt-get update && apt-get install -y sudo 
+          # gnupg2 
            
-          # 添加软件源
-          sudo su -c 'echo "deb http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list' root
+          # # 添加软件源
+          # sudo su -c 'echo "deb http://security.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list' root
           
-          # 增加密钥
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A 54404762BBB6E853
+          # # 增加密钥
+          # sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A 54404762BBB6E853
           
-          # 更新库列表
-          sudo apt update -y
+          # # 更新库列表
+          # sudo apt update -y
           
-          # 安装或更新库
-          sudo apt install libc6 libc6-dev -y
+          # # 安装或更新库
+          # sudo apt install libc6 libc6-dev -y
 
       # Set swap space
       - name: 📐 Set swap to 10G
@@ -101,8 +102,6 @@ jobs:
       # This action checks-out your CONFIGSitory under $GITHUB_WORKSPACE, so your workflow can access it.
       - name: 😄 Checkout
         uses: actions/checkout@v4
-        with:
-          node-version: 16  # 支持 GLIBC 2.17+
 
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
