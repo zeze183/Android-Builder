@@ -108,8 +108,10 @@ jobs:
       - name: ⭐ Install prerequisites
         run: |
           # Step 1: 修复 add-apt-repository 缺失问题
-          sudo apt update
-          sudo apt install -y software-properties-common
+          # 在你的 Dockerfile 中或 run 命令中尝试
+          apt-get update
+          apt-get install -y aptitude
+          aptitude install -y software-properties-common
 
           # Step 2: 添加 PPA 并更新源
           sudo add-apt-repository ppa:deadsnakes/ppa -y
