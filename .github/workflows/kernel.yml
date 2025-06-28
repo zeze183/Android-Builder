@@ -107,7 +107,7 @@ jobs:
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
         run: |
-        # Step 1: 修复 add-apt-repository 缺失问题
+          # Step 1: 修复 add-apt-repository 缺失问题
           sudo apt update
           sudo apt install -y software-properties-common
 
