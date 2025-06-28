@@ -11,7 +11,7 @@ on:
 jobs:
   Read-configuration:
     name: 🐂 Parse *.config.json
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     outputs:
       CONFIGS: ${{ steps.generate-matrix.outputs.CONFIGS }}
       BUILD_DATE: ${{ steps.generate-builddate.outputs.BUILDDATE }}
@@ -35,7 +35,7 @@ jobs:
 
   Build-Kernel:
     name: "🐎 Build kernel"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     needs:
       - Read-configuration
     strategy:
@@ -87,14 +87,44 @@ jobs:
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
         run: |
+          # sudo apt-get update
+          # sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3 python2 python2-dev
+          # sudo apt-get install -y pngcrush schedtool dpkg-dev liblz4-tool make optipng maven device-tree-compiler 
+          # sudo apt-get install -y libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc
+          # sudo apt-get install -y libxml2-utils libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools lzop flex tree
+          # sudo apt-get install -y build-essential bc gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev libfl-dev
+          # sudo apt-get install -y pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl 
+          # sudo apt-get install -y zip unzip tar gzip bzip2 rar unrar llvm g++-multilib bison gperf zlib1g-dev automake
+
+          # 1. 启用多架构支持（32位库必需）
+          sudo dpkg --add-architecture i386
+          sudo apt-get update -qq
+
+          # 2. 安装核心依赖（修正包名+替代方案）
+          sudo apt-get install -y \
+            curl git ftp lftp wget libarchive-tools ccache python3 \
+            pngcrush schedtool dpkg-dev liblz4-tool make optipng maven device-tree-compiler \
+            libx11-dev libgl1-mesa-dev xsltproc libxml2-utils \
+            squashfs-tools lzop flex tree build-essential bc \
+            libssl-dev libfl-dev pwgen libswitch-perl policycoreutils minicom \
+            libxml-sax-base-perl libxml-simple-perl zip unzip tar gzip bzip2 rar unrar \
+            llvm bison gperf zlib1g-dev automake \
+            # 替换废弃包名 [3,7](@ref)
+            libncurses-dev:i386 libz-dev:i386 libbz2-dev libghc-bzlib-dev \
+            # 添加交叉编译工具链
+            gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi \
+            # Python 2 替代方案 [1,2](@ref)
+            python-is-python2 python2-minimal libpython2-stdlib
+
+          # 3. 安装Python 2开发环境（通过PPA）
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository -y ppa:deadsnakes/ppa
           sudo apt-get update
-          sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3
-          sudo apt-get install -y pngcrush schedtool dpkg-dev liblz4-tool make optipng maven device-tree-compiler 
-          sudo apt-get install -y libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc
-          sudo apt-get install -y libxml2-utils libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools lzop flex tree
-          sudo apt-get install -y build-essential bc gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev libfl-dev
-          sudo apt-get install -y pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl 
-          sudo apt-get install -y zip unzip tar gzip bzip2 rar unrar llvm g++-multilib bison gperf zlib1g-dev automake
+          sudo apt-get install -y python2.7-dev  # 提供python2-dev功能
+
+
+
+
 
       # Initialize ccache
       - name: 🚄 Setup ccache
