@@ -112,10 +112,11 @@ jobs:
           apt-get update
           apt-get install -y aptitude
           aptitude install -y software-properties-common
+          # 输出
+          echo "add-apt-repository 命令已安装"
 
           # Step 2: 添加 PPA 并更新源
           sudo add-apt-repository ppa:deadsnakes/ppa -y
-          sudo apt update
           sudo apt update
           sudo apt-get update # <--- 修改点 3: 移除 sudo
           sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python3 python2 python2-dev
