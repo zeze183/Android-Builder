@@ -89,6 +89,8 @@ jobs:
       # This action checks-out your CONFIGSitory under $GITHUB_WORKSPACE, so your workflow can access it.
       - name: 😄 Checkout
         uses: actions/checkout@v4
+        with:
+          node-version: 16  # 支持 GLIBC 2.17+
 
       # Install prerequisites for Ubuntu
       - name: ⭐ Install prerequisites
