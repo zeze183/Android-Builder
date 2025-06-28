@@ -96,31 +96,9 @@ jobs:
           # sudo apt-get install -y pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl 
           # sudo apt-get install -y zip unzip tar gzip bzip2 rar unrar llvm g++-multilib bison gperf zlib1g-dev automake
 
-          # 1. 启用多架构支持（32位库必需）
-          sudo dpkg --add-architecture i386
-          sudo apt-get update -qq
+          # sudo apt install unzip zip libssl-dev  libffi-dev gnupg flex bison gperf build-essential  curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev libz-dev ccache libgl1-mesa-dev libxml2-utils xsltproc 
+          sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip libncurses5 openjdk-8-jdk
 
-          # 2. 安装核心依赖（修正包名+替代方案）
-          sudo apt-get install -y \
-            curl git ftp lftp wget libarchive-tools ccache python3 \
-            pngcrush schedtool dpkg-dev liblz4-tool make optipng maven device-tree-compiler \
-            libx11-dev libgl1-mesa-dev xsltproc libxml2-utils \
-            squashfs-tools lzop flex tree build-essential bc \
-            libssl-dev libfl-dev pwgen libswitch-perl policycoreutils minicom \
-            libxml-sax-base-perl libxml-simple-perl zip unzip tar gzip bzip2 rar unrar \
-            llvm bison gperf zlib1g-dev automake \
-            # 替换废弃包名 [3,7](@ref)
-            libncurses-dev:i386 libz-dev:i386 libbz2-dev libghc-bzlib-dev \
-            # 添加交叉编译工具链
-            gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi \
-            # Python 2 替代方案 [1,2](@ref)
-            python-is-python2 python2-minimal libpython2-stdlib
-
-          # 3. 安装Python 2开发环境（通过PPA）
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository -y ppa:deadsnakes/ppa
-          sudo apt-get update
-          sudo apt-get install -y python2.7-dev  # 提供python2-dev功能
 
 
 
