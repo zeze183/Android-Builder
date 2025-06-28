@@ -115,6 +115,8 @@ jobs:
           # 输出
           echo "add-apt-repository 命令已安装"
 
+      - name: Add PPA and update sources
+        run: |
           # Step 2: 添加 PPA 并更新源
           sudo add-apt-repository ppa:deadsnakes/ppa -y
           sudo apt update
