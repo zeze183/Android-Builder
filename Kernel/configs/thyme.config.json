@@ -1,48 +1,47 @@
 [
   {
     "kernelSource": {
-      "name": "Xiaomi10S（Google-Docker）",
-      "repo": "https://codeberg.org/tataskystudio/android_kernel_xiaomi_thyme",
-      "branch": "lineage-20.0",
+      "name": "Xiaomi10S（Proton）",
+      "repo": "https://github.com/Flicker-Android-Devices/kernel_xiaomi_sm8250",
+      "branch": "fifteen",
       "device": "thyme",
       "defconfig": "thyme_defconfig"
     },
+    "enableCcache": true,
     "toolchains": [
       {
-        "repo": "https://android.googlesource.com/platform/prebuilts/gas/linux-x86",
+        "repo": "https://github.com/kdrag0n/proton-clang",
         "branch": "master",
-        "name": "gas",
-        "binaryEnv": []
-      },
-      {
-        "repo": "https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone/",
-        "branch": "11",
-        "name": "clang",
+        "name": "proton-clang",
         "binaryEnv": [
           "bin"
         ]
       }
     ],
-    "enableCcache": true,
     "params": {
       "ARCH": "arm64",
-      "CC": "clang/bin/clang",
+      "CC": "proton-clang/bin/clang",
       "externalCommands": {
-        "CROSS_COMPILE": "aarch64-linux-gnu-",
-        "CROSS_COMPILE_ARM32": "arm-linux-gnueabi-",
-        "CROSS_COMPILE_COMPAT": "arm-linux-gnueabi-",
-        "CLANG_TRIPLE": "aarch64-linux-gnu-"
+        "CROSS_COMPILE": "proton-clang/bin/aarch64-linux-gnu-",
+        "CROSS_COMPILE_ARM32": "proton-clang/bin/arm-linux-gnueabi-",
+        "LD": "proton-clang/bin/ld.lld",
+        "AR": "proton-clang/bin/llvm-ar",
+        "NM": "proton-clang/bin/llvm-nm",
+        "OBJCOPY": "proton-clang/bin/llvm-objcopy",
+        "OBJDUMP": "proton-clang/bin/llvm-objdump",
+        "READELF": "proton-clang/bin/llvm-readelf",
+        "OBJSIZE": "proton-clang/bin/llvm-size",
+        "STRIP": "proton-clang/bin/llvm-strip",
+        "LDGOLD": "proton-clang/bin/aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "proton-clang/bin/llvm-ar",
+        "LLVM_DIS": "proton-clang/bin/llvm-dis"
       }
     },
     "AnyKernel3": {
       "use": true,
-      "release": true,
-      "custom": {
-        "repo": "https://github.com/easterNday/AnyKernel3/",
-        "branch": "thyme"
-      }
+      "release": true
     },
-    "enableKernelSU": true,
+    "enableKernelSU": false,
     "enableLXC": true
   }
 ]
